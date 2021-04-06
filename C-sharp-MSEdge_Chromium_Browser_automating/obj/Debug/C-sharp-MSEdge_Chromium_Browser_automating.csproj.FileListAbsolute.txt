@@ -1,0 +1,13 @@
+D:\千慮一得齋\程式開發\C#\C-sharp-MSEdge_Chromium_Browser_automating\C-sharp-MSEdge_Chromium_Browser_automating\bin\Debug\C-sharp-MSEdge_Chromium_Browser_automating.exe.config
+D:\千慮一得齋\程式開發\C#\C-sharp-MSEdge_Chromium_Browser_automating\C-sharp-MSEdge_Chromium_Browser_automating\bin\Debug\C-sharp-MSEdge_Chromium_Browser_automating.exe
+D:\千慮一得齋\程式開發\C#\C-sharp-MSEdge_Chromium_Browser_automating\C-sharp-MSEdge_Chromium_Browser_automating\bin\Debug\C-sharp-MSEdge_Chromium_Browser_automating.pdb
+D:\千慮一得齋\程式開發\C#\C-sharp-MSEdge_Chromium_Browser_automating\C-sharp-MSEdge_Chromium_Browser_automating\obj\Debug\C-sharp-MSEdge_Chromium_Browser_automating.csprojAssemblyReference.cache
+D:\千慮一得齋\程式開發\C#\C-sharp-MSEdge_Chromium_Browser_automating\C-sharp-MSEdge_Chromium_Browser_automating\obj\Debug\Interop.UIAutomationClient.dll
+D:\千慮一得齋\程式開發\C#\C-sharp-MSEdge_Chromium_Browser_automating\C-sharp-MSEdge_Chromium_Browser_automating\obj\Debug\Interop.UIAutomationCrossBitnessHookLib.dll
+D:\千慮一得齋\程式開發\C#\C-sharp-MSEdge_Chromium_Browser_automating\C-sharp-MSEdge_Chromium_Browser_automating\obj\Debug\C-sharp-MSEdge_Chromium_Browser_automating.csproj.ResolveComReference.cache
+D:\千慮一得齋\程式開發\C#\C-sharp-MSEdge_Chromium_Browser_automating\C-sharp-MSEdge_Chromium_Browser_automating\obj\Debug\C_sharp_MSEdge_Chromium_Browser_automating.Form1.resources
+D:\千慮一得齋\程式開發\C#\C-sharp-MSEdge_Chromium_Browser_automating\C-sharp-MSEdge_Chromium_Browser_automating\obj\Debug\C_sharp_MSEdge_Chromium_Browser_automating.Properties.Resources.resources
+D:\千慮一得齋\程式開發\C#\C-sharp-MSEdge_Chromium_Browser_automating\C-sharp-MSEdge_Chromium_Browser_automating\obj\Debug\C-sharp-MSEdge_Chromium_Browser_automating.csproj.GenerateResource.cache
+D:\千慮一得齋\程式開發\C#\C-sharp-MSEdge_Chromium_Browser_automating\C-sharp-MSEdge_Chromium_Browser_automating\obj\Debug\C-sharp-MSEdge_Chromium_Browser_automating.csproj.CoreCompileInputs.cache
+D:\千慮一得齋\程式開發\C#\C-sharp-MSEdge_Chromium_Browser_automating\C-sharp-MSEdge_Chromium_Browser_automating\obj\Debug\C-sharp-MSEdge_Chromium_Browser_automating.exe
+D:\千慮一得齋\程式開發\C#\C-sharp-MSEdge_Chromium_Browser_automating\C-sharp-MSEdge_Chromium_Browser_automating\obj\Debug\C-sharp-MSEdge_Chromium_Browser_automating.pdb
