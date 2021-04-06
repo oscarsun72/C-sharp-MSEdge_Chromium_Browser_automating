@@ -17,6 +17,7 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+            //Form1.getUrl(BrowserName.MsEdge);
         }
     }
 }
