@@ -16,8 +16,8 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
-            new Browser(BrowserName.MsEdge).getUrl();
+            //Application.Run(new Form1());//不啟始表單
+            new Browser(BrowserName.MsEdge).getUrl();//直接執行，不啟始表單
         }
     }
 }
