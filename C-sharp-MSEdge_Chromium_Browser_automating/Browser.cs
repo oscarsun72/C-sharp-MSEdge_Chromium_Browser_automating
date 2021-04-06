@@ -1,10 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Automation;
 using System.Windows.Forms;
 
@@ -12,15 +8,25 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
 {
     class Browser
     {
-        Browser(BrowserName browserName)
+        string browsername = "chrome";
+        public Browser(BrowserName browserNameFrom)
         {
-
+            switch (browserNameFrom)
+            {
+                case BrowserName.Chrome:
+                    break;
+                case BrowserName.MsEdge:
+                    browsername = "msedge";
+                    break;
+                default:
+                    break;
+            }
         }
 
         /*fredrikhaglund/ChromeLauncher.cs
         https://gist.github.com/fredrikhaglund/43aea7522f9e844d3e7b
          */
-        private const string ChromeAppKey = 
+        private const string ChromeAppKey =
             @"\Software\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe";
 
         private static string ChromeAppFileName
@@ -43,20 +49,10 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
         }
 
 
-        public static string[] getUrl(BrowserName browserNameFrom)
+        //public static string[] getUrl(BrowserName browserNameFrom)
+        internal string[] getUrl()
         {//https://www.c-sharpcorner.com/forums/how-to-all-the-urls-of-the-open-tabs-of-a-browser
-            string[] msg={ "",""};
-            string browsername = "chrome";
-            switch (browserNameFrom)
-            {
-                case BrowserName.Chrome:
-                    break;
-                case BrowserName.MsEdge:
-                    browsername = "msedge";
-                    break;
-                default:
-                    break;
-            }
+            string[] msg = { "", "" };
             try
             {
                 //Process[] procsChrome = Process.GetProcessesByName("chrome");
@@ -99,7 +95,7 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                                 string vp = ((ValuePattern)Elm.
                                     GetCurrentPattern(ValuePattern.Pattern)).
                                     Current.Value as string;
-                                urls += vp;
+                                urls += (vp + " ");
                             }
                         }
                     }
@@ -107,16 +103,16 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                     msg[0] = urls;
                     if (urls.IndexOf("https://") > -1)
                     {
-                        openUrlChrome(urls);
+                        openUrlChrome(@urls);//冠不冠「@」沒差
                     }
                     else
-                        openUrlChrome(@"https://" + urls);
+                        openUrlChrome(@"https://" + @urls);//冠不冠「@」沒差
                 }
             }
             catch (Exception ex)
             {
                 //textBox2.Text = ex.ToString();
-                msg[1]= ex.ToString();
+                msg[1] = ex.ToString();
             }
             return msg;
         }
@@ -159,10 +155,10 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                     }
                 }
             }
-            
+
         }
 
-        static void openUrlChrome(string url)
+        void openUrlChrome(string url)
         {//https://stackoverflow.com/questions/6305388/how-to-launch-a-google-chrome-tab-with-specific-url-using-c-sharp
             //string url = @"https://stackoverflow.com/questions/6305388/how-to-launch-a-google-chrome-tab-with-specific-url-using-c-sharp/";
             string browserFullname = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
@@ -172,7 +168,7 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
             //https://docs.microsoft.com/zh-tw/troubleshoot/windows-server/deployment/filenames-with-spaces-require-quotation-mark
             //browserFullname = @"V:\softwares\PortableApps\PortableApps\GoogleChromePortable\GoogleChromePortable.exe";
 
-            Process.Start(browserFullname, url);
+            Process.Start(browserFullname, @url.Replace("\"", "%22"));//冠不冠「@」沒差。「"」要取代為「%22」才有效，取代為「""」也無效 20210407
             //Process.Start(url);//這樣是用系統預設瀏覽器開啟
         }
 
@@ -181,7 +177,7 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
         string browserFullname = getBrowserFullname(BrowserName.MsEdge);
         private static string getBrowserFullname(BrowserName browserName)
         {//https://stackoverflow.com/questions/14299382/getting-chrome-and-firefox-version-locally-c-sharp
-            object path;string bFullname="";
+            object path; string bFullname = "";
             switch (browserName)
             {
                 case BrowserName.Chrome:
