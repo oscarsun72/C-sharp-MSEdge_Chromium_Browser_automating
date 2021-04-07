@@ -23,6 +23,7 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
             }
         }
 
+        #region fredrikhaglund/ChromeLauncher.cs
         /*fredrikhaglund/ChromeLauncher.cs
         https://gist.github.com/fredrikhaglund/43aea7522f9e844d3e7b
          */
@@ -33,21 +34,23 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
         {
             get
             {
-                return (string)(Registry.GetValue("HKEY_LOCAL_MACHINE" + ChromeAppKey, "", null) ??
-                                    Registry.GetValue("HKEY_CURRENT_USER" + ChromeAppKey, "", null));
+                return (string)(Registry.GetValue("HKEY_LOCAL_MACHINE" +
+                    ChromeAppKey, "", null) ??
+                    Registry.GetValue("HKEY_CURRENT_USER" + ChromeAppKey,
+                    "", null));
             }
         }
-
-        public static void OpenLink(string url)
+        
+        public void OpenLinkChrome(string url)
         {
             string chromeAppFileName = ChromeAppFileName;
             if (string.IsNullOrEmpty(chromeAppFileName))
             {
                 throw new Exception("Could not find chrome.exe!");
             }
-            Process.Start(chromeAppFileName, url);
+            Process.Start(chromeAppFileName,urlRegx(url));
         }
-
+        #endregion
 
         //public static string[] getUrl(BrowserName browserNameFrom)
         internal string[] getUrl()
@@ -103,10 +106,12 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                     msg[0] = urls;
                     if (urls.IndexOf("https://") > -1)
                     {
-                        openUrlChrome(@urls);//冠不冠「@」沒差
+                        //openUrlChrome(@urls);//冠不冠「@」沒差
+                        OpenLinkChrome(urls);
                     }
                     else
-                        openUrlChrome(@"https://" + @urls);//冠不冠「@」沒差
+                        //openUrlChrome(@"https://" + @urls);//冠不冠「@」沒差
+                        OpenLinkChrome(@"https://" + @urls);//冠不冠「@」沒差
                 }
             }
             catch (Exception ex)
@@ -161,15 +166,22 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
         void openUrlChrome(string url)
         {//https://stackoverflow.com/questions/6305388/how-to-launch-a-google-chrome-tab-with-specific-url-using-c-sharp
             //string url = @"https://stackoverflow.com/questions/6305388/how-to-launch-a-google-chrome-tab-with-specific-url-using-c-sharp/";
-            string browserFullname = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
+            //string browserFullname = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
+            string browserFullname = ChromeAppFileName;
+
             //之前可能是用到WPF所以不接受路徑中有空格，且又有存取權限的問題。這個Windows Forms應用程式則似乎都又有這樣的問題了
             //string browserFullname = @"C:\""Program Files (x86)""\Google\Chrome\Application\google_translation-ConsoleApp.exe";
             //使用空格的長檔名或路徑需要用引號括住:
             //https://docs.microsoft.com/zh-tw/troubleshoot/windows-server/deployment/filenames-with-spaces-require-quotation-mark
             //browserFullname = @"V:\softwares\PortableApps\PortableApps\GoogleChromePortable\GoogleChromePortable.exe";
 
-            Process.Start(browserFullname, @url.Replace("\"", "%22"));//冠不冠「@」沒差。「"」要取代為「%22」才有效，取代為「""」也無效 20210407
+            Process.Start(browserFullname, @urlRegx(url));//冠不冠「@」沒差。「"」要取代為「%22」才有效，取代為「""」也無效 20210407
             //Process.Start(url);//這樣是用系統預設瀏覽器開啟
+        }
+
+        string urlRegx(string url){//網址規範化-將特殊字元置換
+            
+            return url.Replace("\"", "%22");
         }
 
         #region MyTempRegion
