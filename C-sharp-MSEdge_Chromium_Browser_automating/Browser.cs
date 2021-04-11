@@ -18,6 +18,9 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                 case BrowserName.MsEdge:
                     browsername = "msedge";
                     break;
+                case BrowserName.iExplore:
+                    browsername = "iexplore";
+                    break;
                 default:
                     break;
             }
@@ -40,7 +43,7 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                     "", null));
             }
         }
-        
+
         public void OpenLinkChrome(string url)
         {
             string chromeAppFileName = ChromeAppFileName;
@@ -48,7 +51,7 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
             {
                 throw new Exception("Could not find chrome.exe!");
             }
-            Process.Start(chromeAppFileName,urlRegx(url));
+            Process.Start(chromeAppFileName, urlRegx(url));
         }
         #endregion
 
@@ -59,15 +62,16 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
             try
             {
                 //Process[] procsChrome = Process.GetProcessesByName("chrome");
-                Process[] procsChrome = Process.GetProcessesByName(browsername);
-                if (procsChrome.Length <= 0)
+                Process[] procsBrowser = Process.GetProcessesByName(browsername);
+                if (procsBrowser.Length <= 0)
                 {
-                    MessageBox.Show("Chrome is not running");
+                //    MessageBox.Show("Chrome is not running");
+                    MessageBox.Show(browsername+ " is not running");
                 }
                 else
                 {
                     string urls = "";
-                    foreach (Process proc in procsChrome)
+                    foreach (Process proc in procsBrowser)
                     {
                         // the chrome process must have a window
                         if (proc.MainWindowHandle == IntPtr.Zero)
@@ -165,8 +169,8 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
 
         void openUrlChrome(string url)
         {//https://stackoverflow.com/questions/6305388/how-to-launch-a-google-chrome-tab-with-specific-url-using-c-sharp
-            //string url = @"https://stackoverflow.com/questions/6305388/how-to-launch-a-google-chrome-tab-with-specific-url-using-c-sharp/";
-            //string browserFullname = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
+         //string url = @"https://stackoverflow.com/questions/6305388/how-to-launch-a-google-chrome-tab-with-specific-url-using-c-sharp/";
+         //string browserFullname = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
             string browserFullname = ChromeAppFileName;
 
             //之前可能是用到WPF所以不接受路徑中有空格，且又有存取權限的問題。這個Windows Forms應用程式則似乎都又有這樣的問題了
@@ -176,11 +180,12 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
             //browserFullname = @"V:\softwares\PortableApps\PortableApps\GoogleChromePortable\GoogleChromePortable.exe";
 
             Process.Start(browserFullname, @urlRegx(url));//冠不冠「@」沒差。「"」要取代為「%22」才有效，取代為「""」也無效 20210407
-            //Process.Start(url);//這樣是用系統預設瀏覽器開啟
+                                                          //Process.Start(url);//這樣是用系統預設瀏覽器開啟
         }
 
-        string urlRegx(string url){//網址規範化-將特殊字元置換
-            
+        string urlRegx(string url)
+        {//網址規範化-將特殊字元置換
+
             return url.Replace("\"", "%22");
         }
 
@@ -216,3 +221,4 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
         #endregion
     }
 }
+
