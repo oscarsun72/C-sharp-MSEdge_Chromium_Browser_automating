@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Automation;
 using System.Windows.Forms;
@@ -56,7 +57,7 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
         #endregion
 
         //public static string[] getUrl(BrowserName browserNameFrom)
-        internal string[] getUrl()
+        internal string[] getUrlGo()
         {//https://www.c-sharpcorner.com/forums/how-to-all-the-urls-of-the-open-tabs-of-a-browser
             string[] msg = { "", "" };
             try
@@ -65,8 +66,8 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                 Process[] procsBrowser = Process.GetProcessesByName(browsername);
                 if (procsBrowser.Length <= 0)
                 {
-                //    MessageBox.Show("Chrome is not running");
-                    MessageBox.Show(browsername+ " is not running");
+                    //    MessageBox.Show("Chrome is not running");
+                    MessageBox.Show(browsername + " is not running");
                 }
                 else
                 {
@@ -108,7 +109,8 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                     }
                     //textBox1.Text = urls;
                     msg[0] = urls;
-                    if (urls.IndexOf("https://") > -1)
+                    if (urls.IndexOf("https://") > -1||
+                        urls.IndexOf("http://") > -1)
                     {
                         //openUrlChrome(@urls);//冠不冠「@」沒差
                         OpenLinkChrome(urls);
@@ -184,9 +186,25 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
         }
 
         string urlRegx(string url)
-        {//網址規範化-將特殊字元置換
+        {//網址規範化-將特殊字元置換,並清除不必要之字元
+            string[] replWds = { "\"", "%22" };//, "http//", "" };
+            //string clearUrl = url;
+            for (int i = 0; i < replWds.Length; i++)
+            {
+                url = url.Replace(replWds[i], replWds[++i]);
+            }
+            #region HTTP not HTTPs
+            //List<string> webSitesHTTP = new List<string> { "dict.revised.moe.edu.tw" };
+            //foreach (string websitehttp in webSitesHTTP)
+            //{
+            //    if (url.IndexOf(websitehttp) > -1)
+            //    {
+            //        url = url.Replace("https://", "http://");
+            //    }
 
-            return url.Replace("\"", "%22");
+            //}
+            #endregion
+            return url;//url.Replace("\"", "%22");
         }
 
         #region MyTempRegion

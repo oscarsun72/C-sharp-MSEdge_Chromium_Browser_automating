@@ -24,7 +24,7 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
             {
                 bn = BrowserName.iExplore;
             }
-            new Browser(bn).getUrl();//直接執行，不啟始表單
+            new Browser(bn).getUrlGo();//直接執行，不啟始表單
         }
     }
 }
