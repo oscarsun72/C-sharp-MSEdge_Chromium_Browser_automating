@@ -67,7 +67,9 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                 if (procsBrowser.Length <= 0)
                 {
                     //    MessageBox.Show("Chrome is not running");
-                    MessageBox.Show(browsername + " is not running");
+                    MessageBox.Show(browsername + " " +
+                        "is not the source running browser" + "\n" +
+                        "來源流覽器");
                 }
                 else
                 {
