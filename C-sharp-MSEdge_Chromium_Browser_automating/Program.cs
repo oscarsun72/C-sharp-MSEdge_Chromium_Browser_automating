@@ -17,7 +17,6 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());//不啟始表單
             BrowserName bn = BrowserName.MsEdge;
             Process[] procsBrowser = Process.GetProcessesByName("iexplore");
             if (procsBrowser.Length>0)
@@ -25,6 +24,7 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                 bn = BrowserName.iExplore;
             }
             new Browser(bn).getUrlGo();//直接執行，不啟始表單
+            //Application.Run(new Form1());//不啟始表單
         }
     }
 }

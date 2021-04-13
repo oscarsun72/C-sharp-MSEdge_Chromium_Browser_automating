@@ -56,10 +56,9 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
         }
         #endregion
 
-        //public static string[] getUrl(BrowserName browserNameFrom)
-        internal string[] getUrlGo()
-        {//https://www.c-sharpcorner.com/forums/how-to-all-the-urls-of-the-open-tabs-of-a-browser
-            string[] msg = { "", "" };
+        string getUrl(ControlType controlType)
+        {
+            string urls = "";
             try
             {
                 //Process[] procsChrome = Process.GetProcessesByName("chrome");
@@ -73,7 +72,6 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                 }
                 else
                 {
-                    string urls = "";
                     foreach (Process proc in procsBrowser)
                     {
                         // the chrome process must have a window
@@ -93,25 +91,141 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                             elm.FindAll(TreeScope.Subtree,
                             new PropertyCondition(
                                 AutomationElement.ControlTypeProperty,
-                                ControlType.Edit));//https://social.msdn.microsoft.com/Forums/en-US/f9cb8d8a-ab6e-4551-8590-bda2c38a2994/retrieve-chrome-url-using-automation-element-in-c-application?forum=csharpgeneral
+                                controlType));//https://social.msdn.microsoft.com/Forums/en-US/f9cb8d8a-ab6e-4551-8590-bda2c38a2994/retrieve-chrome-url-using-automation-element-in-c-application?forum=csharpgeneral
                         /*要用Edit屬性才抓得到網址列,Text也不行
                          */
 
                         // if it can be found, get the value from the URL bar
                         if (elmUrlBar != null)
                         {
-                            foreach (AutomationElement Elm in elmUrlBar)
+                            int i = 0;int cnt = elmUrlBar.Count;
+nx:                          foreach (AutomationElement Elm in elmUrlBar)
                             {
-                                string vp = ((ValuePattern)Elm.
+                                try
+                                {
+                                    i++;if (i > cnt)break;
+                                    string vp = ((ValuePattern)Elm.
                                     GetCurrentPattern(ValuePattern.Pattern)).
                                     Current.Value as string;
-                                urls += (vp + " ");
+                                    if (urls.IndexOf(vp)==-1)
+                                    urls += (vp + " ");
+                                }
+                                catch (Exception)
+                                {
+                                    goto nx;
+                                    //throw;
+                                }
                             }
                         }
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                //textBox2.Text = ex.ToString();
+                MessageBox.Show(ex.ToString());                
+            }
+            return urls;
+        }
+
+        private string whatWebsite(string urls)
+        {
+            List<string> gettextboxSiteList = new List<string> { "http://dict.revised.moe.edu.tw/" };
+            foreach (string website in gettextboxSiteList)
+            {
+                if (urls.IndexOf(website) > -1)
+                {
+                    return getUrl(ControlType.Edit) +" " + Clipboard.GetText();
+                    //視窗若是最小化，則也是抓不到的
+                    /* 完全抓不到《國語辭典》下方的網頁網址方塊。或許與轉成文字那行程式碼有關
+                     * 目前只能先用Edit了，若不行再先手動複製，由程式碼讀書剪貼簿者（如上一行）……感恩感恩　南無阿彌陀佛 20210414
+                     * 《國語辭典》以下有東西：
+                     * Edit：唯此較似，但仍無效
+                     * Text,Hyperlink,Image 有，但都不切實際。不是該頁面的連結
+                     * 以下屬性則均無
+                     * Window,Pane,Button,Calendar,CheckBox,
+                     * CheckBox,Custom,DataGrid,DataItem,Document,Group,
+                     * Header,HeaderItem,List,ListItem,Menu,MenuBar,MenuItem,
+                     * ProgressBar,RadioButton,ScrollBar,Separator,Slider,Spinner,
+                     * SplitButton,StatusBar,Tab,TabItem,Table,Thumb,TitleBar,
+                     * ToolBar,ToolTip,Tree,TreeItem
+                     * 網頁原始碼為：
+                     * <table class="referencetable1">
+                        <tr><td>
+                        <span >本頁網址︰</span><input type="text" value="http://dict.revised.moe.edu.tw/cgi-bin/cbdic/gsweb.cgi?o=dcbdic&searchid=Z00000016073" size=80 onclick="select()" onkeypress="select()" readonly="" >
+                        </td></tr>
+                        </table>
+                     * 則應是text型別沒錯啊。或者看可讀選取網頁原始碼，再取得此網址即可 20210414
+                     */
+                }
+            }
+            return urls;
+        }
+
+        //public static string[] getUrl(BrowserName browserNameFrom)
+        internal string[] getUrlGo()
+        {//https://www.c-sharpcorner.com/forums/how-to-all-the-urls-of-the-open-tabs-of-a-browser
+            string[] msg = { "", "" };
+            try
+            {
+                ////Process[] procsChrome = Process.GetProcessesByName("chrome");
+                //Process[] procsBrowser = Process.GetProcessesByName(browsername);
+                //if (procsBrowser.Length <= 0)
+                //{
+                //    //    MessageBox.Show("Chrome is not running");
+                //    MessageBox.Show(browsername + " " +
+                //        "is not the source running browser" + "\n" +
+                //        "來源流覽器");
+                //}
+                //else
+                //{
+                //    string urls = "";
+                //    foreach (Process proc in procsBrowser)
+                //    {
+                //        // the chrome process must have a window
+                //        if (proc.MainWindowHandle == IntPtr.Zero)
+                //        {
+                //            continue;
+                //        }
+
+                //        // find the automation element
+                //        AutomationElement elm = AutomationElement.FromHandle
+                //            (proc.MainWindowHandle);
+                //        //AutomationElement elmUrlBar =
+                //        //    elm.FindFirst(TreeScope.Descendants,
+                //        //    new PropertyCondition(AutomationElement.NameProperty,
+                //        //    "Address and search bar"));
+                //        AutomationElementCollection elmUrlBar =
+                //            elm.FindAll(TreeScope.Subtree,
+                //            new PropertyCondition(
+                //                AutomationElement.ControlTypeProperty,
+                //                ControlType.Edit));//https://social.msdn.microsoft.com/Forums/en-US/f9cb8d8a-ab6e-4551-8590-bda2c38a2994/retrieve-chrome-url-using-automation-element-in-c-application?forum=csharpgeneral
+                //        /*要用Edit屬性才抓得到網址列,Text也不行
+                //         */
+
+                //        // if it can be found, get the value from the URL bar
+                //        if (elmUrlBar != null)
+                //        {
+                //            foreach (AutomationElement Elm in elmUrlBar)
+                //            {
+                //                string vp = ((ValuePattern)Elm.
+                //                    GetCurrentPattern(ValuePattern.Pattern)).
+                //                    Current.Value as string;
+                //                urls += (vp + " ");
+                //            }
+                //        }
+                //    }
+
+                string urls = whatWebsite(getUrl(ControlType.Edit));
+                if (urls == "")
+                {
+
+                }
+                else
+                {
                     //textBox1.Text = urls;
                     msg[0] = urls;
-                    if (urls.IndexOf("https://") > -1||
+                    if (urls.IndexOf("https://") > -1 ||
                         urls.IndexOf("http://") > -1)
                     {
                         //openUrlChrome(@urls);//冠不冠「@」沒差
