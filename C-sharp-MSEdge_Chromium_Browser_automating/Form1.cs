@@ -31,7 +31,7 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
             //selenium 
             //https://medium.com/@geekanonymous79/microsoft-edge-automation-using-selenium-in-python-af3cecfed5ed
             
-            string[] msg=new Browser(BrowserName.MsEdge).getUrl();
+            string[] msg=new Browser(BrowserName.MsEdge).getUrlGo();
             textBox1.Text = msg[0];
             textBox2.Text = msg[1];
         }
@@ -82,7 +82,7 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
 
     public enum BrowserName
     {
-        Chrome, MsEdge
+        Chrome, MsEdge,iExplore
     }
 }
 
