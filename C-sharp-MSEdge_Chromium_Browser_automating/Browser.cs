@@ -27,10 +27,10 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
             }
         }
 
-        #region fredrikhaglund/ChromeLauncher.cs
+        #region fredrikhaglund/ChromeLauncher.cs        
         /*fredrikhaglund/ChromeLauncher.cs
         https://gist.github.com/fredrikhaglund/43aea7522f9e844d3e7b
-         */
+         
         private const string ChromeAppKey =
             @"\Software\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe";
 
@@ -53,7 +53,7 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                 throw new Exception("Could not find chrome.exe!");
             }
             Process.Start(chromeAppFileName, urlRegx(url));
-        }
+        } */
         #endregion
 
         string getUrl(ControlType controlType)
@@ -229,11 +229,11 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                         urls.IndexOf("http://") > -1)
                     {
                         //openUrlChrome(@urls);//冠不冠「@」沒差
-                        OpenLinkChrome(urls);
+                        BrowserChrome.OpenLinkChrome(urls);
                     }
                     else
                         //openUrlChrome(@"https://" + @urls);//冠不冠「@」沒差
-                        OpenLinkChrome(@"https://" + @urls);//冠不冠「@」沒差
+                        BrowserChrome.OpenLinkChrome(@"https://" + @urls);//冠不冠「@」沒差
                 }
             }
             catch (Exception ex)
@@ -243,6 +243,9 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
             }
             return msg;
         }
+
+        #region 用NameProperty屬性來找無效
+        /*
         void getUrl_noWork()
         //https://stackoverflow.com/questions/18897070/getting-the-current-tabs-url-from-google-chrome-using-c-sharp
         { // there are always multiple chrome processes, so we have to loop through all of them to find the
@@ -264,10 +267,10 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                     elm.FindFirst(TreeScope.Descendants,
                     new PropertyCondition(AutomationElement.NameProperty,
                     "Address and search bar"));
-                /*NameProperty 這個屬性抓不到
-                 * AutomationElement.ControlTypeProperty,
+                //NameProperty 這個屬性抓不到
+                // AutomationElement.ControlTypeProperty,
                 ControlType.Edit));//這個個屬性才抓得到網址列，詳 getUrl()
-                */
+                //
 
                 // if it can be found, get the value from the URL bar
                 if (elmUrlBar != null)
@@ -283,13 +286,13 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                 }
             }
 
-        }
-
+        } */
+        #endregion
         void openUrlChrome(string url)
         {//https://stackoverflow.com/questions/6305388/how-to-launch-a-google-chrome-tab-with-specific-url-using-c-sharp
          //string url = @"https://stackoverflow.com/questions/6305388/how-to-launch-a-google-chrome-tab-with-specific-url-using-c-sharp/";
          //string browserFullname = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
-            string browserFullname = ChromeAppFileName;
+            string browserFullname = BrowserChrome.ChromeAppFileName;
 
             //之前可能是用到WPF所以不接受路徑中有空格，且又有存取權限的問題。這個Windows Forms應用程式則似乎都又有這樣的問題了
             //string browserFullname = @"C:\""Program Files (x86)""\Google\Chrome\Application\google_translation-ConsoleApp.exe";
@@ -301,9 +304,9 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
                                                           //Process.Start(url);//這樣是用系統預設瀏覽器開啟
         }
 
-        string urlRegx(string url)
+        internal static string urlRegx(string url)
         {//網址規範化-將特殊字元置換,並清除不必要之字元
-            string[] replWds = { "\"", "%22" };//, "http//", "" };
+            string[] replWds = { "\"", "%22", " ", "%20" };//, "http//", "" };
             //string clearUrl = url;
             for (int i = 0; i < replWds.Length; i++)
             {
@@ -325,10 +328,9 @@ namespace C_sharp_MSEdge_Chromium_Browser_automating
 
         #region MyTempRegion
 
-        string browserFullname = getBrowserFullname(BrowserName.MsEdge);
-        private static string getBrowserFullname(BrowserName browserName)
+        internal static string getBrowserFullname(BrowserName browserName)
         {//https://stackoverflow.com/questions/14299382/getting-chrome-and-firefox-version-locally-c-sharp
-            object path; string bFullname = "";
+            object path; string bFullname ;
             switch (browserName)
             {
                 case BrowserName.Chrome:

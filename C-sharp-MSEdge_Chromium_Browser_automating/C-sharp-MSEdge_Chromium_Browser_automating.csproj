@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Browser.cs" />
+    <Compile Include="BrowserChrome.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
